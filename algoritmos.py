@@ -61,6 +61,32 @@ class Algoritmos:
 
         return caminho
 
+    def prim(self,grafo, raiz):
+        assert type(grafo)==dict
+
+        nodes = grafo.keys()
+        nodes.remove(raiz)
+        
+        visited = [raiz]
+        path = []
+        next = None
+
+        while nodes:
+            distance = float('inf') 
+            for s in visited:
+                for d in grafo[s]:
+                    if d in visited or s == d:
+                        continue
+                    if grafo[s][d] < distance:
+                        distance = grafo[s][d]
+                        pre = s
+                        next = d
+            path.append((pre, next))
+            visited.append(next)
+            nodes.remove(next)
+
+        return path
+
 algoritmno = Algoritmos()
 
 grafo_dicionario = {
@@ -87,3 +113,6 @@ print('\nExemplo de Kruskal:')
 caminho = algoritmno.kruskal(grafo_dicionario)
 print caminho
 
+print('\nExemplo de Prim:')
+caminho = algoritmno.prim(grafo_dicionario, 'sp')
+print caminho
